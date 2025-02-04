@@ -3,6 +3,7 @@ using UnityEngine.UI;
 
 public class SpawnStuff : MonoBehaviour
 {
+    [SerializeField] GameObject content;
     [SerializeField]
     int quantity;
     [SerializeField]
@@ -13,7 +14,7 @@ public class SpawnStuff : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        Image[] children = GetComponentsInChildren<Image>();
+        Image[] children = content.GetComponentsInChildren<Image>();
         foreach (Image child in children)
         {
             if(child.gameObject != template.gameObject)
@@ -27,8 +28,9 @@ public class SpawnStuff : MonoBehaviour
             GameObject newStuff = Instantiate(template.gameObject);
             RectTransform rect = newStuff.GetComponent<RectTransform>();
             newStuff.transform.SetParent(transform);
-            rect.anchorMax = template.anchorMax;
-            //rect.anchoredPosition = new Vector2(rect.anchoredPosition.x, -buffer - ((rect.sizeDelta.y + buffer) * index) );
+            rect.sizeDelta = template.sizeDelta;
+            Vector3 offset = new(template.offsetMin.x, (template.offsetMin.y - buffer)*index-buffer);
+            newStuff.transform.position = content.transform.position + offset;
         }
     }
 
