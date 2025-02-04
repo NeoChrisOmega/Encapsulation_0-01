@@ -1,0 +1,4 @@
+repository "Encapsulation@NexusEntertainmentOrganization@cloud"
+  path "/"
+    br "/main"
+    co "/main"
